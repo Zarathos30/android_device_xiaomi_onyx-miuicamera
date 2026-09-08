@@ -1,5 +1,8 @@
 binder_call(hal_camera_default, platform_app)
 
 # watermark materials copied by the camera app into /data/vendor/camera/watermarks
-allow hal_camera_default vendor_camera_data_file:dir { getattr open read search };
-allow hal_camera_default vendor_camera_data_file:file { getattr open read };
+# NOTE: map/ioctl/lock/append are required by the MiAlgoEngine MIVI_CW plugin,
+# which mmaps the material files; without them createPendant fails in enforcing
+# and the failure is hidden by dontaudit rules (no avc logged)
+allow hal_camera_default vendor_camera_data_file:dir { getattr open read search lock ioctl };
+allow hal_camera_default vendor_camera_data_file:file { getattr open read map ioctl lock append };
