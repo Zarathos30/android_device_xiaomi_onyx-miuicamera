@@ -5,8 +5,10 @@ allow platform_app hal_aidlbgservice_service:service_manager find;
 
 allow platform_app adsprpcd_file:dir { open read search };
 
-allow platform_app vendor_camera_data_file:dir { append map r_dir_perms write };
-allow platform_app vendor_camera_data_file:file { getattr open read };
+# MIVI watermark: the camera app copies watermark materials to
+# /data/vendor/camera/watermarks for the vendor algo (MiAlgoEngine MIVI_CW)
+allow platform_app vendor_camera_data_file:dir { r_dir_perms write create add_name remove_name rmdir setattr };
+allow platform_app vendor_camera_data_file:file { r_file_perms write create setattr rename unlink };
 
 allow platform_app app_data_file:file execute;
 

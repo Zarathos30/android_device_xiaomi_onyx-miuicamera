@@ -1,1 +1,5 @@
 binder_call(hal_camera_default, platform_app)
+
+# watermark materials copied by the camera app into /data/vendor/camera/watermarks
+allow hal_camera_default vendor_camera_data_file:dir { getattr open read search };
+allow hal_camera_default vendor_camera_data_file:file { getattr open read };
